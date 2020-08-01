@@ -1,0 +1,40 @@
+1.The functions rotation,translation,scaling,shearing,reflection,zoom and tilt take as input the image,its label(as coordinates in image) and other parameters required
+for augmentation.
+
+2.Many times the augmented image is out of window and the image dimensions have to be increased to accomodate the full image (in case we want no image data to be lost after augmentations)
+Setting cut=FASLE in above functions as well as in the tilt function , the image will not be cut and full image will be displayed (dimensions will be increased accordingly).
+
+3.The output will be a tuple of the transformed image and transformed labels.
+
+4.The augmentations are performed by either affine matrix transformations or projective matrix transformations.For both of these we need a transformation matrix which we can then apply to
+the input image and labels to get the transformed image and labels.
+
+5.The tilt function takes the maximum deviation allowed in the transformation matrix (in form of a list of length 6 for affine and 8 for projective). Parameters of transformation matrix will 
+be randomly sampled from (minval possible,maxval provided).
+
+6.Parameter sequence for affine     : theta,phi,scale_x,scale_y,translation_x,translation_y
+  Parameter sequence for projective : isotropic scaling factor,theta,translation_x,translation_y,shear_factor,scaling_factor,elation_x,elation_y
+
+
+
+
+
+
+#For advanced or custom techniques (optional)
+
+1.For affine transformations , transformation matrix is of form : [[a,b,c],[d,e,f],[0,0,1]] i.e. 6 parameters required.
+  For projective transformations , transformation matrix is of form : [[a,b,c],[d,e,f],[g,h,1]] i.e. 8 parameters required.
+
+2.The functions rotation,translation,scaling,shearing,reflection and tilt compute the transformation matrix automatically by specifyind required arguments to the compute_transform_mat function.
+  Then apply the transformation matrix over input image and label using the apply_transform function.
+
+3.If we want we can make our own augmentation technique as well in three ways:
+        a.Use the tilt function and specifying the maximum deviation allowed in the transformation matrix (in form of a list of length 6 for affine and 8 for projective). Parameters of transformation matrix will be randomly sampled from (minimum val possible,maxdeviation).
+        b.Using the compute_transform_mat and apply_transform functions.
+        c.Come up with our own transformation matrix and then use the apply_transform_mat function to input image and label.
+
+4.The compute_transform_mat function takes either a. *A list of coordinates of shape (2,6) for affine transformation and of shape (2,8) for projective transformation as input.
+                                               or b. A list of parameters of the transformation matrix (either affine or projective) excluding the zeros and ones.
+        
+        *The first row in the list of coordinates corresponds to example coordinates in the input image and the second row in the coordinates corresponds to example coordinates in the transformed image.
+        These examaple coordinates are usually image corner points which we should know beforehand.
