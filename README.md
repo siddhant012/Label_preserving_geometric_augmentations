@@ -1,2 +1,2 @@
 # Label_preserving_geometric_augmentations
-A tool to apply geometric augmentations to transform images along with its label like in case of bounding box labels or in-image features using projective and affine matrix transformations which is usually not possible with augmentations tools provided in deep learning frameworks like keras etc.
+Apply geometric transformations using projective and affine transformation matrices to images and also modify the image label accordingly. When using geometric augmentation to increase our dataset-size, image labels like bounding boxes also need to be modified. This python script serves exactly this purpose. Supports a variety of labels like bounding boxes, in-image feature points etc.
